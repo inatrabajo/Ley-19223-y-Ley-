@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ciberdelitos Chile — Guía de Estudio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a24;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.14);
+    --accent: #6C63FF;
+    --accent2: #FF6B6B;
+    --accent3: #00D9A3;
+    --text: #f0f0f5;
+    --muted: #888899;
+    --mono: 'DM Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --display: 'Syne', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BG GRID */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(108,99,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(108,99,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    padding: 3rem 0 2.5rem;
+    border-bottom: 0.5px solid var(--border2);
+    margin-bottom: 2.5rem;
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent3);
+    border: 0.5px solid var(--accent3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.8rem;
+  }
+
+  h1 span.hl { color: var(--accent); }
+  h1 span.hl2 { color: var(--accent3); }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 300;
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* NAV TABS */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 10px;
+    padding: 6px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .tab {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .tab:hover { color: var(--text); background: var(--surface2); }
+  .tab.active {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  /* SECTIONS */
+  .section { display: none; animation: fadeUp 0.3s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 0.6rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pill {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  .pill-purple { background: rgba(108,99,255,0.18); color: var(--accent); }
+  .pill-green { background: rgba(0,217,163,0.12); color: var(--accent3); }
+  .pill-red { background: rgba(255,107,107,0.12); color: var(--accent2); }
+
+  .card p, .card li { font-size: 14px; color: #ccccd8; line-height: 1.7; }
+  .card ul { padding-left: 1.2rem; }
+  .card li { margin-bottom: 4px; }
+
+  /* COMPARE TABLE */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .compare-col {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .compare-header {
+    padding: 1rem 1.2rem;
+    border-bottom: 0.5px solid var(--border2);
+  }
+
+  .compare-header .law-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .compare-header h3 {
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .col-19 .compare-header { border-left: 3px solid var(--accent); }
+  .col-21 .compare-header { border-left: 3px solid var(--accent3); }
+  .col-19 .law-num { color: var(--accent); }
+  .col-21 .law-num { color: var(--accent3); }
+
+  .compare-body { padding: 1rem 1.2rem; }
+  .compare-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 0;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .compare-row:last-child { border-bottom: none; }
+  .compare-row .label { font-size: 11px; color: var(--muted); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; }
+  .compare-row .value { font-size: 13px; color: var(--text); }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--border2);
+  }
+  .tl-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+  .tl-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    background: var(--bg);
+  }
+  .tl-dot.green { border-color: var(--accent3); }
+  .tl-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .tl-title { font-family: var(--display); font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .tl-desc { font-size: 13px; color: #aaaabc; line-height: 1.6; }
+
+  /* QUIZ */
+  .quiz-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--surface2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+  .progress-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: right;
+  }
+
+  .quiz-card {
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-law-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .quiz-law-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+  .quiz-question {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 1.5rem;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option {
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 0.5px solid var(--border2);
+    background: var(--surface2);
+    color: var(--text);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: left;
+    font-family: var(--sans);
+    line-height: 1.5;
+  }
+
+  .option:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(108,99,255,0.08);
+  }
+
+  .option.correct {
+    border-color: var(--accent3);
+    background: rgba(0,217,163,0.1);
+    color: var(--accent3);
+  }
+
+  .option.wrong {
+    border-color: var(--accent2);
+    background: rgba(255,107,107,0.1);
+    color: var(--accent2);
+  }
+
+  .option:disabled { cursor: default; }
+
+  .feedback {
+    margin-top: 1rem;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    display: none;
+  }
+
+  .feedback.show { display: block; }
+  .feedback.ok { background: rgba(0,217,163,0.1); border: 0.5px solid rgba(0,217,163,0.3); color: var(--accent3); }
+  .feedback.ko { background: rgba(255,107,107,0.1); border: 0.5px solid rgba(255,107,107,0.3); color: var(--accent2); }
+
+  .quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+  }
+
+  .btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 0.5px solid var(--border2);
+    background: transparent;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .btn:hover { background: var(--surface2); border-color: var(--border2); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { opacity: 0.9; }
+  .btn:disabled { opacity: 0.35; cursor: default; }
+
+  /* SCORE */
+  .score-screen {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--surface);
+    border: 0.5px solid var(--border2);
+    border-radius: 14px;
+  }
+
+  .score-num {
+    font-family: var(--display);
+    font-size: 72px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .score-label { color: var(--muted); font-size: 15px; margin-bottom: 2rem; }
+
+  /* FLASHCARDS */
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 1.5rem; cursor: pointer; }
+
+  .flashcard {
+    width: 100%;
+    min-height: 220px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  }
+
+  .flashcard.flipped { transform: rotateY(180deg); }
+
+  .fc-front, .fc-back {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    border: 0.5px solid var(--border2);
+    text-align: center;
+  }
+
+  .fc-front {
+    background: var(--surface);
+  }
+
+  .fc-back {
+    background: var(--surface2);
+    transform: rotateY(180deg);
+  }
+
+  .fc-hint {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .fc-term {
+    font-family: var(--display);
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+
+  .fc-def { font-size: 14px; color: #ccccdc; line-height: 1.7; }
+
+  .fc-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 1rem;
+  }
+
+  .fc-counter {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    min-width: 60px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 1.8rem; }
+    .quiz-question { font-size: 16px; }
+    .score-num { font-size: 56px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="badge">Derecho Penal Digital · Chile</div>
+    <h1>Ley <span class="hl">19.223</span> & Ley <span class="hl2">21.459</span></h1>
+    <p class="subtitle">Guía completa de estudio: ciberdelitos en Chile, comparativa y quiz interactivo.</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('resumen')">Resumen</button>
+    <button class="tab" onclick="switchTab('comparar')">Comparativa</button>
+    <button class="tab" onclick="switchTab('historia')">Historia</button>
+    <button class="tab" onclick="switchTab('tarjetas')">Tarjetas</button>
+    <button class="tab" onclick="switchTab('quiz')">Quiz</button>
+  </div>
+
+  <!-- RESUMEN -->
+  <div id="resumen" class="section active">
+
+    <div class="card">
+      <div class="card-title"><span class="pill pill-purple">Ley 19.223</span> Primera ley de ciberdelitos en Chile</div>
+      <p>Publicada en <strong>1993</strong>, fue la primera ley latinoamericana en tipificar delitos informáticos. Surgió en un contexto de escasa penetración de internet, enfocada en la protección de sistemas informáticos y datos.</p>
+      <ul style="margin-top:0.8rem;">
+        <li>Art. 1 — Destrucción o inutilización maliciosa de sistemas informáticos.</li>
+        <li>Art. 2 — Interceptación o interrupción de transmisiones de datos.</li>
+        <li>Art. 3 — Acceso indebido a sistemas de tratamiento de información.</li>
+        <li>Art. 4 — Divulgación indebida de datos contenidos en un sistema.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="pill pill-green">Ley 21.459</span> Modernización del marco jurídico</div>
+      <p>Publicada en <strong>2022</strong>, adapta la legislación chilena al <em>Convenio de Budapest sobre Ciberdelincuencia</em> del Consejo de Europa. Amplía el catálogo de delitos, introduce nuevas figuras y refuerza las herramientas procesales.</p>
+      <ul style="margin-top:0.8rem;">
+        <li>Acceso ilícito a sistemas informáticos.</li>
+        <li>Interceptación ilícita de datos informáticos.</li>
+        <li>Ataque a la integridad de los datos.</li>
+        <li>Ataque a la integridad de sistemas.</li>
+        <li>Abuso de dispositivos (nuevo).</li>
+        <li>Fraude informático (nuevo).</li>
+        <li>Falsificación informática (nuevo).</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="pill pill-red">Punto clave</span> Relación entre ambas leyes</div>
+      <p>La Ley 21.459 <strong>no deroga completamente</strong> la Ley 19.223. Deroga los artículos 1 al 4 de la antigua ley, pero mantiene vigentes otras disposiciones penales que no eran tipificadas en la nueva. En la práctica, la Ley 21.459 es el marco principal, más moderno y alineado a estándares internacionales.</p>
+    </div>
+
+  </div>
+
+  <!-- COMPARATIVA -->
+  <div id="comparar" class="section">
+    <div class="compare-grid">
+      <div class="compare-col col-19">
+        <div class="compare-header">
+          <div class="law-num">LEY 19.223</div>
+          <h3>Marco original</h3>
+        </div>
+        <div class="compare-body">
+          <div class="compare-row">
+            <span class="label">Año</span>
+            <span class="value">1993</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Contexto</span>
+            <span class="value">Pre-internet masivo en Chile</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Delitos</span>
+            <span class="value">4 artículos básicos</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Fraude informático</span>
+            <span class="value">No tipificado</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Convenio Budapest</span>
+            <span class="value">No adherido</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Abuso de dispositivos</span>
+            <span class="value">No contemplado</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Cooperación internacional</span>
+            <span class="value">Limitada</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Penas</span>
+            <span class="value">Presidio menor a mayor</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="compare-col col-21">
+        <div class="compare-header">
+          <div class="law-num">LEY 21.459</div>
+          <h3>Marco moderno</h3>
+        </div>
+        <div class="compare-body">
+          <div class="compare-row">
+            <span class="label">Año</span>
+            <span class="value">2022</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Contexto</span>
+            <span class="value">Era digital, ciberataques globales</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Delitos</span>
+            <span class="value">7 figuras penales ampliadas</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Fraude informático</span>
+            <span class="value">Tipificado expresamente</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Convenio Budapest</span>
+            <span class="value">Alineada a sus estándares</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Abuso de dispositivos</span>
+            <span class="value">Delito específico (Art. 5)</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Cooperación internacional</span>
+            <span class="value">Mecanismos reforzados</span>
+          </div>
+          <div class="compare-row">
+            <span class="label">Penas</span>
+            <span class="value">Presidio menor, multas y agravantes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:0.5rem;">
+      <div class="card-title">Diferencias sustanciales</div>
+      <ul>
+        <li><strong>Alcance:</strong> La Ley 21.459 cubre conductas inexistentes en 1993, como phishing, ransomware, fraude con tarjetas y falsificación de datos digitales.</li>
+        <li><strong>Herramientas procesales:</strong> Introduce facultades específicas para preservación e intercepción de datos en investigaciones penales.</li>
+        <li><strong>Agravantes:</strong> Contempla agravantes cuando el ataque afecta infraestructura crítica (hospitales, servicios esenciales del Estado).</li>
+        <li><strong>Tentativa y conspiración:</strong> Sanciona de forma expresa la preparación de ciertos ciberdelitos.</li>
+        <li><strong>Extraterritorialidad:</strong> Amplía la aplicación de la ley a delitos cometidos desde el extranjero contra Chile.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- HISTORIA -->
+  <div id="historia" class="section">
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="card-title">Línea de tiempo</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">1993</div>
+        <div class="tl-title">Ley 19.223 — Pionera en Latinoamérica</div>
+        <div class="tl-desc">Chile promulga la primera ley de ciberdelitos de la región. Cuatro artículos cubren sabotaje, espionaje e intrusión informática. El contexto: pocos miles de computadores conectados a internet en el país.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2001</div>
+        <div class="tl-title">Convenio de Budapest</div>
+        <div class="tl-desc">El Consejo de Europa abre a firma el primer tratado internacional sobre ciberdelincuencia. Chile no lo suscribe de inmediato, pero sienta un estándar que influirá en la futura legislación nacional.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2000s–2010s</div>
+        <div class="tl-title">Brecha legislativa</div>
+        <div class="tl-desc">Con el auge de internet, redes sociales y banca en línea, la Ley 19.223 queda obsoleta. Delitos como el phishing, ransomware o fraude con tarjetas no encajaban en sus tipos penales.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2018–2021</div>
+        <div class="tl-title">Tramitación de la nueva ley</div>
+        <div class="tl-desc">Se inicia el proceso legislativo para modernizar el marco penal de ciberdelitos, adaptándolo al Convenio de Budapest y casos relevantes como ataques al Banco de Chile (2018).</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">Junio 2022</div>
+        <div class="tl-title">Ley 21.459 — Nuevo marco vigente</div>
+        <div class="tl-desc">Publicada en el Diario Oficial. Incorpora 7 delitos informáticos modernos, mecanismos procesales específicos, agravantes para infraestructura crítica y abre paso a la cooperación internacional en investigaciones de cibercrimen.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARJETAS -->
+  <div id="tarjetas" class="section">
+    <p style="font-size:13px;color:var(--muted);margin-bottom:1rem;text-align:center;">Haz clic en la tarjeta para ver la definición</p>
+
+    <div class="flashcard-wrap" onclick="flipCard()">
+      <div class="flashcard" id="fc">
+        <div class="fc-front">
+          <div class="fc-hint">Toca para revelar</div>
+          <div class="fc-term" id="fc-term">Cargando...</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:0.8rem;" id="fc-tag"></div>
+        </div>
+        <div class="fc-back">
+          <div class="fc-hint">Definición</div>
+          <div class="fc-def" id="fc-def">...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc-nav">
+      <button class="btn" onclick="fcNav(-1)">← Anterior</button>
+      <span class="fc-counter" id="fc-counter">1 / 12</span>
+      <button class="btn" onclick="fcNav(1)">Siguiente →</button>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="section">
+    <div id="quiz-main">
+      <div class="quiz-progress">
+        <div class="progress-bar"><div class="progress-fill" id="q-progress"></div></div>
+        <div class="progress-text" id="q-counter">1 / 12</div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-law-tag"><span class="dot" id="q-dot"></span><span id="q-tag"></span></div>
+        <div class="quiz-question" id="q-question">Cargando...</div>
+        <div class="options" id="q-options"></div>
+        <div class="feedback" id="q-feedback"></div>
+      </div>
+
+      <div class="quiz-nav">
+        <span style="font-size:13px;color:var(--muted);" id="q-score-live">Correctas: 0</span>
+        <button class="btn primary" id="q-next" onclick="nextQ()" style="display:none;">Siguiente →</button>
+      </div>
+    </div>
+
+    <div id="quiz-end" style="display:none;">
+      <div class="score-screen">
+        <div class="fc-hint" style="margin-bottom:1rem;">Resultado final</div>
+        <div class="score-num" id="end-score">0/12</div>
+        <div class="score-label" id="end-msg">Buen intento</div>
+        <div style="margin-top:2rem;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+          <button class="btn primary" onclick="restartQuiz()">Intentar de nuevo</button>
+          <button class="btn" onclick="switchTab('tarjetas')">Repasar tarjetas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── TAB LOGIC ───────────────────────────────────────────
+function switchTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  if (id === 'quiz') initQuiz();
+  if (id === 'tarjetas') initFlashcards();
+}
+
+// ─── FLASHCARDS DATA ─────────────────────────────────────
+const cards = [
+  { term: 'Ley 19.223', tag: 'General', def: 'Primera ley chilena que tipifica delitos informáticos, promulgada en 1993. Cubre sabotaje, espionaje e intrusión a sistemas.' },
+  { term: 'Ley 21.459', tag: 'General', def: 'Ley de 2022 que moderniza el marco chileno de ciberdelitos, alineándolo al Convenio de Budapest. Amplía delitos e incorpora herramientas procesales.' },
+  { term: 'Convenio de Budapest', tag: 'Ley 21.459', def: 'Primer tratado internacional sobre ciberdelincuencia (2001), del Consejo de Europa. La Ley 21.459 adapta Chile a sus estándares y figuras delictivas.' },
+  { term: 'Acceso ilícito', tag: 'Ley 21.459 · Art. 2', def: 'Acceder sin autorización a un sistema informático o permanecer en él. Pena: presidio menor en su grado mínimo a medio.' },
+  { term: 'Interceptación ilícita', tag: 'Ley 21.459 · Art. 3', def: 'Capturar o escuchar sin autorización transmisiones no públicas de datos informáticos hacia, desde o dentro de un sistema.' },
+  { term: 'Ataque a la integridad de datos', tag: 'Ley 21.459 · Art. 4', def: 'Dañar, borrar, deteriorar, alterar o suprimir datos informáticos sin autorización.' },
+  { term: 'Ataque a la integridad del sistema', tag: 'Ley 21.459 · Art. 5', def: 'Obstaculizar o interrumpir el funcionamiento de un sistema informático mediante daño o eliminación de datos.' },
+  { term: 'Abuso de dispositivos', tag: 'Ley 21.459 · Art. 5', def: 'Producir, adquirir o poseer dispositivos, contraseñas o programas diseñados principalmente para cometer ciberdelitos. Delito nuevo sin equivalente en Ley 19.223.' },
+  { term: 'Fraude informático', tag: 'Ley 21.459 · Art. 7', def: 'Manipular datos o sistemas para obtener un beneficio económico ilícito en perjuicio de terceros. Delito nuevo; la Ley 19.223 no lo contemplaba.' },
+  { term: 'Falsificación informática', tag: 'Ley 21.459 · Art. 8', def: 'Introducir, alterar, borrar o suprimir datos informáticos para producir datos no auténticos con la intención de que sean tratados como genuinos.' },
+  { term: 'Agravante de infraestructura crítica', tag: 'Ley 21.459', def: 'La pena se agrava cuando el delito afecta sistemas de servicios esenciales: hospitales, agua, energía, telecomunicaciones o seguridad del Estado.' },
+  { term: 'Derogación parcial', tag: 'Relación entre leyes', def: 'La Ley 21.459 deroga los artículos 1 al 4 de la Ley 19.223. No es una derogación total; algunas disposiciones de la ley antigua permanecen vigentes.' },
+];
+
+let fcIdx = 0;
+
+function initFlashcards() {
+  fcIdx = 0;
+  renderCard();
+}
+
+function renderCard() {
+  const c = cards[fcIdx];
+  document.getElementById('fc-term').textContent = c.term;
+  document.getElementById('fc-tag').textContent = c.tag;
+  document.getElementById('fc-def').textContent = c.def;
+  document.getElementById('fc-counter').textContent = (fcIdx + 1) + ' / ' + cards.length;
+  document.getElementById('fc').classList.remove('flipped');
+}
+
+function flipCard() {
+  document.getElementById('fc').classList.toggle('flipped');
+}
+
+function fcNav(dir) {
+  fcIdx = (fcIdx + dir + cards.length) % cards.length;
+  renderCard();
+}
+
+initFlashcards();
+
+// ─── QUIZ DATA ────────────────────────────────────────────
+const questions = [
+  {
+    q: '¿En qué año fue promulgada la Ley 19.223?',
+    opts: ['1990', '1993', '1999', '2001'],
+    ans: 1,
+    tag: 'Ley 19.223',
+    exp: 'La Ley 19.223 fue publicada el 7 de junio de 1993, convirtiéndose en la primera ley de ciberdelitos de Latinoamérica.'
+  },
+  {
+    q: '¿Cuántos artículos principales tipifica la Ley 19.223?',
+    opts: ['2', '4', '6', '8'],
+    ans: 1,
+    tag: 'Ley 19.223',
+    exp: 'La Ley 19.223 consta de 4 artículos que cubren sabotaje, espionaje, intrusión y divulgación indebida de datos informáticos.'
+  },
+  {
+    q: '¿A qué tratado internacional busca alinearse la Ley 21.459?',
+    opts: ['Tratado de Marrakech', 'Convenio de Budapest', 'Acuerdo de Wassenaar', 'Convenio de La Haya'],
+    ans: 1,
+    tag: 'Ley 21.459',
+    exp: 'La Ley 21.459 incorpora al derecho chileno los estándares del Convenio de Budapest sobre Ciberdelincuencia del Consejo de Europa (2001).'
+  },
+  {
+    q: '¿Cuál de estos delitos fue NUEVO con la Ley 21.459, sin equivalente en la Ley 19.223?',
+    opts: ['Sabotaje informático', 'Espionaje informático', 'Fraude informático', 'Acceso indebido'],
+    ans: 2,
+    tag: 'Comparativa',
+    exp: 'El fraude informático (art. 7) y el abuso de dispositivos son delitos completamente nuevos. La Ley 19.223 no contemplaba manipulación de sistemas para obtener beneficio económico.'
+  },
+  {
+    q: '¿Qué ocurre con la Ley 19.223 tras la entrada en vigor de la Ley 21.459?',
+    opts: ['Es derogada completamente', 'Se derogan solo sus arts. 1 al 4', 'Queda suspendida', 'Sigue vigente en su totalidad'],
+    ans: 1,
+    tag: 'Relación entre leyes',
+    exp: 'La Ley 21.459 deroga expresamente los artículos 1 al 4 de la Ley 19.223, pero no la deroga en su totalidad. Algunas disposiciones permanecen vigentes.'
+  },
+  {
+    q: '¿Qué artículo de la Ley 21.459 tipifica el "acceso ilícito" a sistemas?',
+    opts: ['Art. 1', 'Art. 2', 'Art. 5', 'Art. 7'],
+    ans: 1,
+    tag: 'Ley 21.459',
+    exp: 'El artículo 2 de la Ley 21.459 tipifica el acceso ilícito: acceder sin autorización o permanecer en un sistema informático ajeno.'
+  },
+  {
+    q: 'La Ley 21.459 contempla una agravante cuando el delito afecta...',
+    opts: ['Empresas multinacionales', 'Infraestructura crítica del Estado', 'Bancos privados', 'Redes sociales'],
+    ans: 1,
+    tag: 'Ley 21.459',
+    exp: 'Se agrava la pena cuando el ataque afecta sistemas de servicios esenciales como hospitales, energía, agua, telecomunicaciones o seguridad del Estado.'
+  },
+  {
+    q: '¿Cuál de estas figuras describe mejor el "abuso de dispositivos" de la Ley 21.459?',
+    opts: [
+      'Robar hardware físico de una empresa',
+      'Poseer herramientas diseñadas para cometer ciberdelitos',
+      'Usar un computador ajeno sin permiso',
+      'Vender dispositivos de segunda mano'
+    ],
+    ans: 1,
+    tag: 'Ley 21.459',
+    exp: 'El abuso de dispositivos sanciona producir, adquirir o poseer programas, contraseñas o dispositivos cuyo destino principal sea cometer ciberdelitos.'
+  },
+  {
+    q: '¿Cuántos artículos abarcaba originalmente la Ley 19.223 en materia de tipos penales?',
+    opts: ['2', '3', '4', '6'],
+    ans: 2,
+    tag: 'Ley 19.223',
+    exp: 'Los artículos 1 al 4 de la Ley 19.223 tipificaban los delitos: sabotaje, interceptación, acceso indebido y divulgación no autorizada.'
+  },
+  {
+    q: 'La "falsificación informática" de la Ley 21.459 consiste en...',
+    opts: [
+      'Falsificar documentos físicos con computadores',
+      'Alterar datos digitales para hacerlos pasar como auténticos',
+      'Copiar software protegido',
+      'Suplantar identidad en redes sociales'
+    ],
+    ans: 1,
+    tag: 'Ley 21.459',
+    exp: 'El art. 8 sanciona introducir, alterar, borrar o suprimir datos informáticos para producir datos no auténticos, con intención de que sean tratados como genuinos.'
+  },
+  {
+    q: '¿Cuál fue el año de publicación de la Ley 21.459?',
+    opts: ['2018', '2020', '2021', '2022'],
+    ans: 3,
+    tag: 'Ley 21.459',
+    exp: 'La Ley 21.459 fue publicada en el Diario Oficial en junio de 2022, tras un proceso legislativo iniciado años antes.'
+  },
+  {
+    q: 'En cuanto a cooperación internacional, ¿cuál ley ofrece mejores mecanismos?',
+    opts: ['Ley 19.223', 'Ambas por igual', 'Ley 21.459', 'Ninguna regula esto'],
+    ans: 2,
+    tag: 'Comparativa',
+    exp: 'La Ley 21.459, al alinearse al Convenio de Budapest, incorpora mecanismos expresos de cooperación internacional para investigaciones de ciberdelitos transfronterizos.'
+  },
+];
+
+let qIdx = 0, score = 0, answered = false;
+
+function initQuiz() {
+  qIdx = 0; score = 0; answered = false;
+  document.getElementById('quiz-main').style.display = 'block';
+  document.getElementById('quiz-end').style.display = 'none';
+  renderQ();
+}
+
+function renderQ() {
+  const q = questions[qIdx];
+  document.getElementById('q-question').textContent = q.q;
+  document.getElementById('q-tag').textContent = q.tag;
+  document.getElementById('q-dot').style.background = q.tag.includes('21') ? '#00D9A3' : '#6C63FF';
+  document.getElementById('q-counter').textContent = (qIdx+1) + ' / ' + questions.length;
+  document.getElementById('q-progress').style.width = ((qIdx / questions.length) * 100) + '%';
+  document.getElementById('q-score-live').textContent = 'Correctas: ' + score;
+  document.getElementById('q-next').style.display = 'none';
+  document.getElementById('q-feedback').className = 'feedback';
+  document.getElementById('q-feedback').textContent = '';
+  answered = false;
+
+  const opts = document.getElementById('q-options');
+  opts.innerHTML = '';
+  q.opts.forEach((o, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.textContent = o;
+    btn.onclick = () => selectOpt(i);
+    opts.appendChild(btn);
+  });
+}
+
+function selectOpt(i) {
+  if (answered) return;
+  answered = true;
+  const q = questions[qIdx];
+  const btns = document.querySelectorAll('.option');
+  btns.forEach(b => b.disabled = true);
+  const fb = document.getElementById('q-feedback');
+
+  if (i === q.ans) {
+    score++;
+    btns[i].classList.add('correct');
+    fb.textContent = '✓ Correcto — ' + q.exp;
+    fb.className = 'feedback ok show';
+  } else {
+    btns[i].classList.add('wrong');
+    btns[q.ans].classList.add('correct');
+    fb.textContent = '✗ Incorrecto — ' + q.exp;
+    fb.className = 'feedback ko show';
+  }
+
+  document.getElementById('q-score-live').textContent = 'Correctas: ' + score;
+  document.getElementById('q-next').style.display = 'block';
+  document.getElementById('q-next').textContent = qIdx < questions.length - 1 ? 'Siguiente →' : 'Ver resultado';
+}
+
+function nextQ() {
+  qIdx++;
+  if (qIdx >= questions.length) {
+    showEnd();
+  } else {
+    renderQ();
+  }
+}
+
+function showEnd() {
+  document.getElementById('quiz-main').style.display = 'none';
+  document.getElementById('quiz-end').style.display = 'block';
+  document.getElementById('end-score').textContent = score + ' / ' + questions.length;
+  const pct = score / questions.length;
+  let msg = pct >= 0.9 ? '¡Excelente dominio de la materia!' :
+            pct >= 0.7 ? 'Buen manejo, sigue repasando.' :
+            pct >= 0.5 ? 'Vas por buen camino, repasa los conceptos.' :
+            'Revisa el resumen y las tarjetas antes de volver a intentarlo.';
+  document.getElementById('end-msg').textContent = msg;
+  document.getElementById('end-score').style.color = pct >= 0.7 ? '#00D9A3' : pct >= 0.5 ? '#facc15' : '#FF6B6B';
+}
+
+function restartQuiz() {
+  initQuiz();
+}
+
+initQuiz();
+</script>
+</body>
+</html>
